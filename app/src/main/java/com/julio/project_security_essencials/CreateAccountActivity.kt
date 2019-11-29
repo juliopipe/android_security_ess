@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class CreateAccountActivity : AppCompatActivity() {
     private lateinit var correo: TextView
@@ -16,6 +18,8 @@ class CreateAccountActivity : AppCompatActivity() {
     private lateinit var login: Button
     private lateinit var registrar: Button
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+    private lateinit var myRef: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +30,8 @@ class CreateAccountActivity : AppCompatActivity() {
         confirmarClave = findViewById(R.id.editTextConfirmarClaveCC)
         login = findViewById(R.id.buttonEntrarCC)
         registrar = findViewById(R.id.buttonRegistrarCC)
-
+        database = FirebaseDatabase.getInstance()
+        myRef = database.reference
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
@@ -70,7 +75,9 @@ class CreateAccountActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
+                    val getUser = auth.currentUser
+                    val user = User(getUser!!.uid, getUser.email)
+                    myRef.child("user").child(user.UID!!).setValue(user)
                     cambiarGUIHome()
                     // updateUI(user)
                 } else {

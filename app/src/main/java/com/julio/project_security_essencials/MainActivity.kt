@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var createAccount:FirebaseAuth
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         entrar = findViewById(R.id.buttonEntrarL)
         registrar = findViewById(R.id.buttonRegistrarL)
         auth = FirebaseAuth.getInstance()
-
 
         entrar.setOnClickListener {
             logear(correo.text.toString(), clave.text.toString())
